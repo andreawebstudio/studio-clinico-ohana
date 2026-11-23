@@ -66,7 +66,7 @@
   <div class="header-inner">
     <a class="brand" href="#top" aria-label="Studio Clinico Ohana — torna all'inizio">
       <img src="assets/logo-ohana-192.png" width="60" height="60" alt="">
-      <span class="brand-name">Studio Clinico<br>Ohana</span>
+      <span class="brand-name">Studio Clinico Ohana</span>
     </a>
 
     <nav class="main-nav" id="main-nav" aria-label="Navigazione principale">
@@ -111,7 +111,7 @@
       <p class="hero-lead">Un luogo accogliente e professionale dove prendersi cura del proprio benessere psicologico, attraverso percorsi di psicoterapia attenti alla persona, alla sua storia e alle sue relazioni.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#contatti">Richiedi una consulenza</a>
-        <a class="btn btn-outline" href="#chi-siamo">Scopri lo studio</a>
+        <a class="btn btn-outline" href="#servizi">Scopri i servizi</a>
       </div>
       <p class="hero-detail"><span>Psicoterapia</span><span aria-hidden="true">·</span><span>Relazioni</span><span aria-hidden="true">·</span><span>Benessere psicologico</span></p>
     </div>
@@ -201,37 +201,45 @@
 
   <!-- 5. APPROCCIO — sfondo bianco -->
   <section class="section bg-white" id="approccio" aria-labelledby="approccio-title">
-    <svg class="deco-ginkgo deco-left" aria-hidden="true"><use href="#ginkgo"/></svg>
     <div class="container">
       <header class="section-head reveal">
         <p class="eyebrow"><svg class="eyebrow-leaf" aria-hidden="true"><use href="#ginkgo"/></svg>Approccio</p>
         <h2 id="approccio-title">Comprendere la persona, valorizzare le relazioni.</h2>
       </header>
 
-      <div class="orbit">
-        <div class="orbit-core reveal">
-          <span class="orbit-ring" aria-hidden="true"></span>
-          <span class="orbit-ring orbit-ring--dashed" aria-hidden="true"></span>
-          <div class="orbit-text">
-            <svg class="orbit-leaf" aria-hidden="true"><use href="#ginkgo"/></svg>
-            <p>Ogni persona è parte di una storia fatta di esperienze, emozioni, pensieri e relazioni.</p>
-          </div>
-        </div>
+      <!-- Foglia di Ginkgo (ispirata al logo): ogni lobo corrisponde a un principio.
+           Passando sopra un principio (o su un lobo) la parte corrispondente si colora. -->
+      <div class="leafmap" id="leafmap">
+        <figure class="leafmap-figure">
+          <svg class="leafmap-svg" viewBox="36 104 368 242" aria-hidden="true" focusable="false">
+            <g class="leaf-lobes">
+              <path class="lobe" data-lobe="1" pathLength="1" d="M220 300 Q118 282 46.4 222.7 Q63.75 166.55 116.5 140.6 Z"/>
+              <path class="lobe" data-lobe="2" pathLength="1" d="M220 300 L116.5 140.6 Q168.35 113.2 220 135 Z"/>
+              <path class="lobe" data-lobe="3" pathLength="1" d="M220 300 L220 135 Q271.65 113.2 323.5 140.6 Z"/>
+              <path class="lobe" data-lobe="4" pathLength="1" d="M220 300 L323.5 140.6 Q376.25 166.55 393.6 222.7 Q322 282 220 300 Z"/>
+            </g>
+            <g class="leaf-veins">
+              <path d="M220 300 L71.6 207.3M220 300 L105.2 167.9M220 300 L146 141.4M220 300 L197.7 141.6M220 300 L242.3 141.6M220 300 L294 141.4M220 300 L334.8 167.9M220 300 L368.4 207.3"/>
+            </g>
+            <path class="leaf-stem" pathLength="1" d="M220 300 Q213 322 228 342"/>
+          </svg>
+          <figcaption class="leafmap-quote">Ogni persona è parte di una storia fatta di esperienze, emozioni, pensieri e relazioni.</figcaption>
+        </figure>
 
-        <ul class="orbit-points" role="list">
-          <li class="op op-1 reveal">
+        <ul class="leafmap-list" role="list">
+          <li class="lm-item" data-lobe="1">
             <h3>Ascolto e accoglienza</h3>
             <p>Uno spazio riservato, rispettoso e non giudicante, nel quale la persona possa esprimersi liberamente.</p>
           </li>
-          <li class="op op-2 reveal">
+          <li class="lm-item" data-lobe="2">
             <h3>Centralità della relazione</h3>
             <p>La relazione terapeutica è un elemento fondamentale del percorso di cura.</p>
           </li>
-          <li class="op op-3 reveal">
+          <li class="lm-item" data-lobe="3">
             <h3>Due orientamenti</h3>
             <p>Sistemico-relazionale, per leggere le difficoltà alla luce dei legami significativi; cognitivo-comportamentale, per comprendere le connessioni tra pensieri, emozioni e comportamenti.</p>
           </li>
-          <li class="op op-4 reveal">
+          <li class="lm-item" data-lobe="4">
             <h3>Unicità e cambiamento</h3>
             <p>Rispetto dei tempi e della storia di ciascuno, per favorire nuove prospettive e modalità più funzionali di affrontare le difficoltà.</p>
           </li>
@@ -455,7 +463,7 @@
         </div>
         <div class="field">
           <label for="cf-msg">Messaggio <span aria-hidden="true">*</span></label>
-          <textarea id="cf-msg" name="messaggio" rows="4" required aria-describedby="cf-msg-hint"></textarea>
+          <textarea id="cf-msg" name="messaggio" rows="3" required aria-describedby="cf-msg-hint"></textarea>
           <p class="field-hint" id="cf-msg-hint">Bastano poche righe. Ti chiediamo di non inserire informazioni sanitarie o dati clinici.</p>
           <p class="field-error" id="cf-msg-err" hidden>Scrivi un breve messaggio.</p>
         </div>

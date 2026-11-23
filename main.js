@@ -120,6 +120,36 @@
     }
   }
 
+  /* ---------- Approccio: foglia di Ginkgo interattiva ---------- */
+  var leafmap = document.getElementById('leafmap');
+  if (leafmap) {
+    var lmItems = Array.prototype.slice.call(leafmap.querySelectorAll('.lm-item'));
+    var lobes = Array.prototype.slice.call(leafmap.querySelectorAll('.lobe'));
+
+    function setLobe(n) {
+      if (n) leafmap.setAttribute('data-active', n); else leafmap.removeAttribute('data-active');
+      lmItems.forEach(function (li) { li.classList.toggle('is-active', li.getAttribute('data-lobe') === String(n)); });
+    }
+    lmItems.forEach(function (li) {
+      li.addEventListener('mouseenter', function () { setLobe(li.getAttribute('data-lobe')); });
+    });
+    lobes.forEach(function (p) {
+      p.addEventListener('mouseenter', function () { setLobe(p.getAttribute('data-lobe')); });
+      p.addEventListener('click', function () { setLobe(p.getAttribute('data-lobe')); });
+    });
+    leafmap.addEventListener('mouseleave', function () { setLobe(null); });
+
+    // disegno della foglia quando entra nella pagina
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      leafmap.classList.add('is-drawn');
+    } else {
+      var leafIO = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { leafmap.classList.add('is-drawn'); leafIO.disconnect(); }
+      }, { threshold: 0.3 });
+      leafIO.observe(leafmap);
+    }
+  }
+
   /* ---------- FAQ accordion (tutte chiuse all'avvio) ---------- */
   document.querySelectorAll('.accordion').forEach(function (acc) {
     var single = acc.hasAttribute('data-single-open');

@@ -112,7 +112,7 @@ h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.08rem; line-h
 }
 .brand { flex: none; display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--petrol); }
 .brand img { width: 60px; height: 60px; }
-.brand-name { font-family: var(--font-serif); font-weight: 600; font-size: 1.24rem; line-height: 1.05; letter-spacing: .01em; color: var(--petrol); }
+.brand-name { font-family: var(--font-serif); font-weight: 600; font-size: 1.3rem; line-height: 1.1; letter-spacing: .01em; color: var(--petrol); white-space: nowrap; }
 .brand:hover .brand-name { color: var(--petrol); }
 
 .main-nav { margin-left: auto; }
@@ -141,7 +141,7 @@ h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.08rem; line-h
 @media (max-width: 1199px) {
   :root { --header-h: 76px; }
   .brand img { width: 54px; height: 54px; }
-  .brand-name { font-size: 1.14rem; }
+  .brand-name { font-size: 1.2rem; }
   .header-cta { display: none; }
   .menu-toggle { display: block; flex: none; }
   .main-nav {
@@ -255,54 +255,72 @@ h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.08rem; line-h
 .card-target p { color: var(--text-soft); font-size: .97rem; }
 
 /* ==========================================================================
-   5. APPROCCIO — composizione "orbitale" ispirata al cerchio del logo
+   5. APPROCCIO — foglia di Ginkgo interattiva: 4 lobi = 4 principi
    ========================================================================== */
-.orbit { max-width: 1180px; margin: 0 auto; }
-.orbit-core {
-  position: relative; width: min(calc(100% - 48px), 380px); aspect-ratio: 1; margin: 0 auto;
-  display: grid; place-items: center; border-radius: 50%;
-  background: radial-gradient(circle at 50% 45%, var(--lavender-white) 0%, rgba(245, 244, 250, .6) 55%, rgba(245, 244, 250, 0) 72%);
+.leafmap {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(48px, 7vw, 104px); align-items: center; max-width: 1080px; margin: 0 auto;
 }
-.orbit-ring { position: absolute; inset: 0; border: 1px solid var(--periwinkle); border-radius: 50%; }
-.orbit-ring--dashed { inset: -22px; border: 1px dashed rgba(52, 149, 148, .45); animation: orbit-spin 90s linear infinite; }
-.orbit-ring--dashed::before {
-  content: ""; position: absolute; top: -4px; left: 50%; width: 8px; height: 8px; margin-left: -4px;
-  border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(52, 149, 148, .15);
+.leafmap-figure { margin: 0; text-align: center; }
+.leafmap-svg { width: 100%; max-width: 420px; margin: 0 auto; overflow: visible; }
+.lobe {
+  fill: var(--lavender-white); stroke: var(--accent); stroke-width: 1.4; stroke-linejoin: round;
+  transform-box: view-box; transform-origin: 220px 300px; cursor: pointer;
+  transition: fill .55s var(--ease), transform .55s var(--ease);
 }
-@keyframes orbit-spin { to { transform: rotate(360deg); } }
-.orbit-text { max-width: 72%; text-align: center; }
-.orbit-leaf { width: 34px; height: 34px; margin: 0 auto 14px; color: var(--accent); }
-.orbit-text p { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: clamp(1.35rem, 1vw + 1rem, 1.7rem); line-height: 1.35; color: var(--petrol); }
+.leaf-veins path { fill: none; stroke: var(--periwinkle); stroke-width: 1; stroke-linecap: round; opacity: .7; pointer-events: none; transition: stroke .5s; }
+.leaf-stem { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; }
 
-.orbit-points { list-style: none; margin: 56px auto 0; padding: 0; display: grid; gap: 36px; max-width: 560px; }
-.op { position: relative; padding-left: 40px; }
-.op::before { content: ""; position: absolute; left: 0; top: .78em; width: 22px; height: 1px; background: var(--accent); }
-.op::after { content: ""; position: absolute; left: 22px; top: calc(.78em - 3px); width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
-.op h3 { font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
-.op p { color: var(--text-soft); }
+/* disegno progressivo all'ingresso nella pagina */
+.js .lobe, .js .leaf-stem { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.js .leaf-veins { opacity: 0; transition: opacity 1.2s var(--ease) 1.4s; }
+.js .leafmap.is-drawn .lobe, .js .leafmap.is-drawn .leaf-stem { stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s var(--ease), fill .55s var(--ease), transform .55s var(--ease); }
+.js .leafmap.is-drawn .leaf-stem { transition-delay: 0s; }
+.js .leafmap.is-drawn .lobe[data-lobe="1"] { transition-delay: .2s, 0s, 0s; }
+.js .leafmap.is-drawn .lobe[data-lobe="2"] { transition-delay: .45s, 0s, 0s; }
+.js .leafmap.is-drawn .lobe[data-lobe="3"] { transition-delay: .7s, 0s, 0s; }
+.js .leafmap.is-drawn .lobe[data-lobe="4"] { transition-delay: .95s, 0s, 0s; }
+.js .leafmap.is-drawn .leaf-veins { opacity: 1; }
 
-@media (min-width: 1000px) {
-  .orbit {
-    display: grid; grid-template-columns: minmax(0, 1fr) 400px minmax(0, 1fr);
-    grid-template-rows: auto auto; column-gap: clamp(56px, 6vw, 96px); row-gap: 72px; align-items: center;
-  }
-  .orbit-core { grid-column: 2; grid-row: 1 / span 2; width: 100%; }
-  .orbit-points { display: contents; }
-  .op { padding-left: 0; max-width: 340px; }
-  .op-1 { grid-column: 1; grid-row: 1; justify-self: end; text-align: right; }
-  .op-3 { grid-column: 1; grid-row: 2; justify-self: end; text-align: right; }
-  .op-2 { grid-column: 3; grid-row: 1; justify-self: start; }
-  .op-4 { grid-column: 3; grid-row: 2; justify-self: start; }
-  /* tratto di collegamento verso il cerchio */
-  .op::before { top: .7em; width: clamp(36px, 4vw, 64px); background: linear-gradient(90deg, var(--accent), rgba(52, 149, 148, .15)); }
-  .op::after { top: calc(.7em - 3px); }
-  .op-1::before, .op-3::before { left: calc(100% + 18px); background: linear-gradient(90deg, var(--accent), rgba(52, 149, 148, .1)); }
-  .op-1::after, .op-3::after { left: calc(100% + 14px); }
-  .op-2::before, .op-4::before { left: auto; right: calc(100% + 18px); background: linear-gradient(270deg, var(--accent), rgba(52, 149, 148, .1)); }
-  .op-2::after, .op-4::after { left: auto; right: calc(100% + 14px); }
+/* lobo attivo */
+.leafmap[data-active="1"] .lobe[data-lobe="1"],
+.leafmap[data-active="2"] .lobe[data-lobe="2"],
+.leafmap[data-active="3"] .lobe[data-lobe="3"],
+.leafmap[data-active="4"] .lobe[data-lobe="4"] { fill: var(--accent); transform: scale(1.045); }
+
+.leafmap-quote {
+  max-width: 360px; margin: 30px auto 0;
+  font-family: var(--font-serif); font-style: italic; font-weight: 500;
+  font-size: clamp(1.3rem, .8vw + 1rem, 1.55rem); line-height: 1.4; color: var(--petrol);
 }
-@media (min-width: 640px) and (max-width: 999px) {
-  .orbit-points { grid-template-columns: 1fr 1fr; max-width: 760px; column-gap: 40px; }
+
+.leafmap-list { list-style: none; margin: 0; padding: 0; }
+.lm-item { position: relative; padding: 24px 0 24px 64px; border-top: 1px solid var(--line); cursor: default; }
+.lm-item:last-child { border-bottom: 1px solid var(--line); }
+.lm-item::before {          /* tratto che si allunga quando il principio è attivo */
+  content: ""; position: absolute; left: 0; top: calc(24px + .72em); width: 36px; height: 1.5px;
+  background: var(--periwinkle); transition: width .5s var(--ease), background-color .5s var(--ease);
+}
+.lm-item::after {
+  content: ""; position: absolute; left: 36px; top: calc(24px + .72em - 3px); width: 7px; height: 7px; border-radius: 50%;
+  background: var(--periwinkle); transition: left .5s var(--ease), background-color .5s var(--ease);
+}
+.lm-item h3 { font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; transition: color .4s; }
+.lm-item p { color: var(--text-soft); }
+.lm-item.is-active::before { width: 48px; background: var(--accent); }
+.lm-item.is-active::after { left: 48px; background: var(--accent); }
+.lm-item.is-active h3 { color: var(--accent); }
+
+@media (max-width: 900px) {
+  .leafmap { grid-template-columns: 1fr; gap: 44px; max-width: 600px; }
+  .leafmap-svg { max-width: 300px; }
+}
+@media (max-width: 480px) {
+  .lm-item { padding-left: 52px; }
+  .lm-item::before { width: 28px; }
+  .lm-item::after { left: 28px; }
+  .lm-item.is-active::before { width: 38px; }
+  .lm-item.is-active::after { left: 38px; }
 }
 
 /* ==========================================================================
@@ -413,18 +431,18 @@ html:not(.js) .acc-panel[hidden] { display: grid; grid-template-rows: 1fr; }
    10. CONTATTI — solo form centrale
    ========================================================================== */
 .contact-form {
-  max-width: 600px; margin: 0 auto; padding: clamp(26px, 3.5vw, 40px);
+  max-width: 480px; margin: 0 auto; padding: clamp(22px, 3vw, 32px);
   background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-soft);
 }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
-.field { margin-bottom: 18px; }
+.field { margin-bottom: 14px; }
 .field label { display: block; margin-bottom: 6px; font-size: .86rem; font-weight: 600; }
 .field .optional { font-weight: 400; color: var(--text-soft); }
 .field input[type="text"], .field input[type="email"], .field input[type="tel"], .field textarea {
-  width: 100%; min-height: 48px; padding: 12px 15px; font: inherit; font-size: 1rem; color: var(--petrol);
+  width: 100%; min-height: 44px; padding: 10px 14px; font: inherit; font-size: .95rem; color: var(--petrol);
   background: var(--lavender-white); border: 1px solid transparent; border-radius: 10px; transition: border-color .25s, box-shadow .25s, background-color .25s;
 }
-.field textarea { min-height: 116px; resize: vertical; line-height: 1.6; }
+.field textarea { min-height: 92px; resize: vertical; line-height: 1.6; }
 .field input:hover, .field textarea:hover { border-color: var(--periwinkle); }
 .field input:focus, .field textarea:focus { outline: none; background: var(--white); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(52, 149, 148, .18); }
 .field [aria-invalid="true"] { border-color: var(--petrol); border-width: 2px; }
@@ -491,7 +509,7 @@ html:not(.js) .acc-panel[hidden] { display: grid; grid-template-rows: 1fr; }
   .address-card { padding: 26px 28px 28px; }
 }
 @media (max-width: 380px) {
-  .brand-name { font-size: 1.05rem; }
+  .brand-name { font-size: 1.02rem; }
   .brand img { width: 48px; height: 48px; }
   .btn { padding-inline: 18px; letter-spacing: .1em; }
   .eyebrow { letter-spacing: .2em; }
